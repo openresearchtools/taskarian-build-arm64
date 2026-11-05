@@ -52,7 +52,7 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       with:
-        repository: openresearchtools/taskarian
+        repository: openresearchtools/Taskarian
         ref: ${{ inputs.source_sha }}
         path: source/taskarian
         persist-credentials: false
@@ -125,13 +125,13 @@ jobs:
         deadline=$((SECONDS + 300 * 60))
         for item in "auth:$AUTH_RUN:auth-$BROWSER_TARGET" "search:$SEARCH_RUN:search-runtime-$BROWSER_TARGET" "node:$NODE_RUN:node-runtime-$BROWSER_TARGET" "machines:$ENVIRONMENTS_RUN:machines-runtime-$BROWSER_TARGET" "display:$ENVIRONMENTS_RUN:display-runtime-$BROWSER_TARGET" "guest:$ENVIRONMENTS_RUN:guest-packages-$BROWSER_TARGET" "office:$OFFICE_RUN:office-$BROWSER_TARGET" "files:$OFFICE_RUN:files-$BROWSER_TARGET"; do
           IFS=: read -r target run artifact <<< "$item"
-          while ! gh api "repos/openresearchtools/taskarian/actions/runs/$run/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false) | .name' | grep -Fxq "$artifact"; do
-            status=$(gh api "repos/openresearchtools/taskarian/actions/runs/$run" --jq '.status')
+          while ! gh api "repos/openresearchtools/Taskarian/actions/runs/$run/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false) | .name' | grep -Fxq "$artifact"; do
+            status=$(gh api "repos/openresearchtools/Taskarian/actions/runs/$run" --jq '.status')
             if [ "$status" = completed ]; then echo "Required $artifact is missing from completed run $run" >&2; exit 1; fi
             if (( SECONDS >= deadline )); then echo "Shared 300-minute companion deadline expired waiting for $artifact from run $run" >&2; exit 1; fi
             sleep 30
           done
-          gh run download "$run" --repo openresearchtools/taskarian --name "$artifact" --dir "$RUNNER_TEMP/companion/$target"
+          gh run download "$run" --repo openresearchtools/Taskarian --name "$artifact" --dir "$RUNNER_TEMP/companion/$target"
         done
     - name: Assemble matching guest browser and backend
       run: |
