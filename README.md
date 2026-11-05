@@ -1,6 +1,6 @@
-# BashKitten arm64 builder
+# Taskarian arm64 builder
 
-Build-only repository for [BashKitten](https://github.com/openresearchtools/bashkitten).
+Build-only repository for [Taskarian](https://github.com/openresearchtools/taskarian).
 The workflow checks out the exact product commit requested by the main workflow.
 This repository owns its own compiler cache and never publishes releases.
 
