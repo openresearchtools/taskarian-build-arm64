@@ -36,9 +36,6 @@ run-name: Taskarian ${{ inputs.source_sha }} / ${{ inputs.request_id }}
 permissions:
   contents: read
   actions: read
-concurrency:
-  group: browser-${{ inputs.source_sha }}
-  cancel-in-progress: false
 jobs:
   browser:
     runs-on: ${{ github.repository == 'openresearchtools/taskarian-build-arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
